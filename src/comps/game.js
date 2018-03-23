@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './comps.css';
 
-
 export default class Game extends Component{
 
     constructor(){
@@ -19,22 +18,21 @@ export default class Game extends Component{
           blue: false,
           green: false,
           yellow: false,
-          roundS: []
+          roundS: [],
+          switch: false,
+
+          youlose: '',
         }
 
         this.updatePlayerS = this.updatePlayerS.bind(this);
         this.gameRun = this.gameRun.bind(this);
+        this.newGame = this.newGame.bind(this);
       }
 
       componentDidMount(){
-
           var one = Math.floor(Math.random() * 4) + 1;
-
           var randomSequence = [ one ];
-          
           this.setState({ sequence: randomSequence });
-          
-
       }
 
       updatePlayerS(val){
@@ -44,7 +42,18 @@ export default class Game extends Component{
           ss.push(val);
         this.setState({playerSequence: ss, clicks: numofclicks });
         
-        console.log(this.state.clicks, this.state.playerSequence, this.state.sequence)
+        // console.log(this.state.playerSequence, this.state.partialSequence);
+        const { sequencePiece, playerSequence} = this.state
+
+        if(playerSequence.length === sequencePiece.length && playerSequence.toString() === sequencePiece.toString()){
+
+                this.setState({switch: true, playerSequence: []})
+
+        }else if(playerSequence.length === sequencePiece.length && playerSequence.toString() !== sequencePiece.toString()){
+                this.setState({youlose: "LOSER", score: playerSequence.length-=1})
+        }
+
+        console.log(this.state.switch, "switch")
       }
 
       gameRun(){
@@ -57,7 +66,7 @@ export default class Game extends Component{
           
           var timesx = 1;
           var timesx2 = 0;
-          var partialSequence = []
+          var partialSequence = [];
           for(var i = 0; i < round; i++) {
 
             if( sequence[i] === 1){
@@ -70,6 +79,8 @@ export default class Game extends Component{
                 this.setState({yellow: false});
                 }, 1000 * timesx);
 
+                partialSequence.push(sequence[i])
+
             }else if( sequence[i] === 2){
 
                 setTimeout(() => {
@@ -79,6 +90,8 @@ export default class Game extends Component{
                 setTimeout(() => {
                 this.setState({green: false});
                 }, 1000 * timesx);
+
+                partialSequence.push(sequence[i])
 
             }else if( sequence[i] === 3){
 
@@ -90,6 +103,8 @@ export default class Game extends Component{
                 this.setState({red: false});
                 }, 1000 * timesx);
 
+                partialSequence.push(sequence[i])
+
             }else if( sequence[i] === 4){
 
                 setTimeout(() => {
@@ -100,26 +115,51 @@ export default class Game extends Component{
                 this.setState({blue: false});
                 }, 1000 * timesx);
 
+                partialSequence.push(sequence[i])
+
             }
             timesx++;
             timesx2++;
-            partialSequence.push(sequence[i])
+            this.setState({sequencePiece: partialSequence});
+            this.setState({switch: false});
         }
 
         this.setState({round: round+=1});
-        console.log(partialSequence);
+
+
+        console.log(this.state.sequencePiece, this.state.round, "sequencepiece from gamemeth");
+      }
+
+      newGame(){
+          this.setState({
+            sequence: [],
+            sequencePiece: [],
+            playerSequence: [],
+            score: 0,
+            clicks: 0,
+            round: 1,
+            red: false,
+            blue: false,
+            green: false,
+            yellow: false,
+            roundS: [],
+            switch: false,
+  
+            youlose: '',
+          })
       }
   
-    
+
     render(){
-
-        if(true){
-
+        
+        if(this.state.switch){
+            this.gameRun()
         }
 
         return(
             <div className="gamebuttonbody">
 
+                <div>{this.state.youlose}</div>
                 <div>score#{this.state.score}</div>
 
                 <div className="middleButtonRow">
@@ -139,6 +179,7 @@ export default class Game extends Component{
                 </div>
 
                     <button onClick={() => this.gameRun()}>start</button>
+                    <button onClick={() => this.newGame()}>newGame</button>
             </div>
         )
     }
