@@ -20,13 +20,14 @@ export default class Game extends Component{
           yellow: false,
           roundS: [],
           switch: false,
-
-          youlose: '',
+          youlose: ':)',
+          startSwitch: false
         }
 
         this.updatePlayerS = this.updatePlayerS.bind(this);
         this.gameRun = this.gameRun.bind(this);
         this.newGame = this.newGame.bind(this);
+        this.newgameSwitch = this.newgameSwitch.bind(this);
       }
 
       componentDidMount(){
@@ -36,21 +37,21 @@ export default class Game extends Component{
       }
 
       updatePlayerS(val){
+
           var ss = this.state.playerSequence;
           var numofclicks = this.state.clicks;
           numofclicks+=1;
           ss.push(val);
-        this.setState({playerSequence: ss, clicks: numofclicks });
+          this.setState({playerSequence: ss, clicks: numofclicks });
         
-        // console.log(this.state.playerSequence, this.state.partialSequence);
-        const { sequencePiece, playerSequence} = this.state
+        const { sequencePiece, playerSequence} = this.state;
 
         if(playerSequence.length === sequencePiece.length && playerSequence.toString() === sequencePiece.toString()){
 
                 this.setState({switch: true, playerSequence: []})
 
         }else if(playerSequence.length === sequencePiece.length && playerSequence.toString() !== sequencePiece.toString()){
-                this.setState({youlose: "LOSER", score: playerSequence.length-=1})
+                this.setState({youlose: "LOSER!", score: playerSequence.length-=1})
         }
 
         console.log(this.state.switch, "switch")
@@ -126,8 +127,6 @@ export default class Game extends Component{
 
         this.setState({round: round+=1});
 
-
-        console.log(this.state.sequencePiece, this.state.round, "sequencepiece from gamemeth");
       }
 
       newGame(){
@@ -144,11 +143,14 @@ export default class Game extends Component{
             yellow: false,
             roundS: [],
             switch: false,
-  
-            youlose: '',
+            youlose: ':)',
+            startSwitch: false
           })
       }
-  
+
+      newgameSwitch(){
+          this.setState({startSwitch: true})
+      }
 
     render(){
         
@@ -158,28 +160,39 @@ export default class Game extends Component{
 
         return(
             <div className="gamebuttonbody">
-
+            
+                <h1>THOU SHALT DO AS SIMON SAYS</h1>
                 <div>{this.state.youlose}</div>
-                <div>score#{this.state.score}</div>
+                <div><h1>score {this.state.score}</h1></div>
 
-                <div className="middleButtonRow">
+            
+                    <div id="mbr1" className="middleButtonRow">
 
-                    {this.state.yellow ? <div>{<button id="yellow2" className="gamebutton" onClick={() => this.updatePlayerS(1)}/>}</div> : <button id="yellow" className="gamebutton" onClick={() => this.updatePlayerS(1)}/>  }
+                        {this.state.yellow ? <div>{<button id="yellow2" className="gamebutton" onClick={() => this.updatePlayerS(1)}/>}</div> : <button id="yellow" className="gamebutton" onClick={() => this.updatePlayerS(1)}/>  }
 
-                    {this.state.green ? <div>{<button id="green2" className="gamebutton" onClick={() => this.updatePlayerS(2)}/>}</div> : <button id="green" className="gamebutton" onClick={() => this.updatePlayerS(2)}/>  }
+                        {this.state.green ? <div>{<button id="green2" className="gamebutton" onClick={() => this.updatePlayerS(2)}/>}</div> : <button id="green" className="gamebutton" onClick={() => this.updatePlayerS(2)}/>  }
 
-                </div>
+                    </div>
 
-                <div className="middleButtonRow">
+                    <div className="bottombuttons">
 
-                    {this.state.red ? <div>{<button id="red2" className="gamebutton" onClick={() => this.updatePlayerS(3)}/>}</div> : <button id="red" className="gamebutton" onClick={() => this.updatePlayerS(3)}/>  }
+                        {this.state.startSwitch ? <div>{<button className="buttonbutton" onClick={() => this.newGame()}><h1>newGame</h1></button>
+                        }</div> :  <button className="buttonbutton" onClick={() => {this.gameRun();this.newgameSwitch()}}><h1>Start</h1></button>}
 
-                    {this.state.blue ? <div>{<button id="blue2" className="gamebutton" onClick={() => this.updatePlayerS(4)}/>}</div> : <button id="blue" className="gamebutton" onClick={() => this.updatePlayerS(4)}/>  }
+                    </div>
 
-                </div>
 
-                    <button onClick={() => this.gameRun()}>start</button>
-                    <button onClick={() => this.newGame()}>newGame</button>
+                    <div id="mbr2" className="middleButtonRow">
+
+                        {this.state.red ? <div>{<button id="red2" className="gamebutton" onClick={() => this.updatePlayerS(3)}/>}</div> : <button id="red" className="gamebutton" onClick={() => this.updatePlayerS(3)}/>  }
+
+                        {this.state.blue ? <div>{<button id="blue2" className="gamebutton" onClick={() => this.updatePlayerS(4)}/>}</div> : <button id="blue" className="gamebutton" onClick={() => this.updatePlayerS(4)}/>  }
+
+                    </div>
+                    
+                    <div className="simonouter">
+                    </div>    
+
             </div>
         )
     }
