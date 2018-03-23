@@ -1,0 +1,56 @@
+.gamebuttonbody{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 500px;
+}
+
+.middleButtonRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.gamebutton{
+    height: 100px;
+    width: 100px;
+}
+
+#yellow{
+    background-color: yellow;
+}
+
+#yellow2{
+    background-color: yellow;
+    opacity: 0.4;
+}
+
+#green{
+    background-color: green;
+}
+
+#green2{
+    background-color: green;
+    opacity: 0.4;
+}
+
+#red{
+    background-color: red;
+}
+
+#red2{
+    background-color: red;
+    opacity: 0.4;
+}
+
+#blue{
+    background-color: blue;
+}
+
+#blue2{
+    background-color: blue;
+    opacity: 0.4;
+}
