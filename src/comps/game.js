@@ -29,7 +29,7 @@ export default class Game extends Component{
           youlose: ':)',
           startSwitch: false,
           roundTracker: 0,
-          looseSwitch: false,
+          looseSwitch: true,
         }
 
         this.updatePlayerS = this.updatePlayerS.bind(this);
@@ -68,7 +68,7 @@ export default class Game extends Component{
 
                 setTimeout(() => {
                     this.setState({looseSwitch: false})
-                }, 1000)
+                }, 20)
 
         }
 
