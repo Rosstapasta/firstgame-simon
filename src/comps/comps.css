@@ -17,12 +17,12 @@
 #mbr1{
     position: relative;
     z-index: 1;
-    top: 15px;
+    top: 8px;
 }
 
 #mbr2{
     position: relative;
-    bottom: 275px;
+    bottom: 270px;
     z-index: 1;
 }
 
@@ -38,12 +38,53 @@
 }
 
 .buttonbutton{
+width:20px;
+height: 20px;
+background-color: green;
+border-radius: 10px;
+border: none;
+box-shadow: 2px 2px rgb(1, 80, 1);
+}
+
+.testbutton{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin:10px;
     height: 240px;
-    width: 240px;
+    width: 245px;
     border-radius: 125px;
-    background-color: rgb(227, 221, 231);
-    border: 10px solid black;
+    background-color: rgb(34, 33, 33);
+}
+
+.testbuttonrow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    bottom: 30px;
+}
+
+.rounds{
+    background-color: rgb(180, 176, 176);
+    height: 25px;
+    width: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.placeholder{
+    width: 30px;
+    height: 1px;
+}
+
+.simon{
+    color: white;
+    font-size: 3.8rem;
 }
 
 .gamebutton{
@@ -56,49 +97,53 @@
 
 #yellow{
     background-color: rgb(255, 251, 0);
-    border-radius: 500px 90px 90px 90px;
+    border-radius: 500px 40px 40px 40px;
+    outline: 0;
 }
 
 #yellow2{
-    background-color: rgb(255, 255, 157);
-    border-radius: 500px 90px 90px 90px;
+    background-color: rgb(255, 255, 185);
+    border-radius: 500px 40px 40px 40px;
 }
 
 #green{
     background-color: green;
-    border-radius: 90px 500px 90px 90px;
+    border-radius: 40px 500px 40px 40px;
+    outline: 0;
 }
 
 #green2{
     background-color: rgb(64, 231, 106);
-    border-radius: 90px 500px 90px 90px;
+    border-radius: 40px 500px 40px 40px;
 }
 
 #red{
     background-color: red;
-    border-radius: 90px 90px 90px 500px;
+    border-radius: 40px 40px 40px 500px;
+    outline: 0;
 }
 
 #red2{
     background-color: rgb(245, 126, 96);
-    border-radius: 90px 90px 90px 500px;
+    border-radius: 40px 40px 40px 500px;
 }
 
 #blue{
     background-color: blue;
-    border-radius: 90px 90px 500px 90px;
+    border-radius: 40px 40px 500px 40px;
+    outline: 0;
 }
 
 #blue2{
     background-color: rgb(0, 183, 255);
     
-    border-radius: 90px 90px 500px 90px;
+    border-radius: 40px 40px 500px 40px;
 }
 
 .simonouter{
     height: 555px;
     width: 600px;
-    background-color: black;
+    background-color: rgb(34, 33, 33);
     border-radius: 600px;
     position: relative;
     bottom: 800px;

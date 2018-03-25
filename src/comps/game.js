@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import './comps.css';
+import sound1 from './sound1.mp3';
+import sound2 from './sound2.mp3';
+import sound3 from './sound3.mp3';
+import sound4 from './sound4.mp3';
+
 
 export default class Game extends Component{
 
@@ -21,13 +26,15 @@ export default class Game extends Component{
           roundS: [],
           switch: false,
           youlose: ':)',
-          startSwitch: false
+          startSwitch: false,
+          roundTracker: 0
         }
 
         this.updatePlayerS = this.updatePlayerS.bind(this);
         this.gameRun = this.gameRun.bind(this);
         this.newGame = this.newGame.bind(this);
         this.newgameSwitch = this.newgameSwitch.bind(this);
+        this.playerPress = this.playerPress.bind(this);
       }
 
       componentDidMount(){
@@ -37,7 +44,7 @@ export default class Game extends Component{
       }
 
       updatePlayerS(val){
-
+          var roundTrack = this.state.roundTracker;
           var ss = this.state.playerSequence;
           var numofclicks = this.state.clicks;
           numofclicks+=1;
@@ -48,7 +55,7 @@ export default class Game extends Component{
 
         if(playerSequence.length === sequencePiece.length && playerSequence.toString() === sequencePiece.toString()){
 
-                this.setState({switch: true, playerSequence: []})
+               return this.setState({switch: true, playerSequence: [], roundTracker: roundTrack+=1})
 
         }else if(playerSequence.length === sequencePiece.length && playerSequence.toString() !== sequencePiece.toString()){
                 this.setState({youlose: "LOSER!", score: playerSequence.length-=1})
@@ -58,7 +65,7 @@ export default class Game extends Component{
       }
 
       gameRun(){
-
+          this.setState({switch: false});
           const { sequence } = this.state;
           const newSSSS = sequence;
           newSSSS.push(Math.floor(Math.random() * 4) + 1);
@@ -80,10 +87,11 @@ export default class Game extends Component{
                 this.setState({yellow: false});
                 }, 1000 * timesx);
 
+
                 partialSequence.push(sequence[i])
 
             }else if( sequence[i] === 2){
-
+             
                 setTimeout(() => {
                 this.setState({green: true});
                 }, 1000 * timesx2)
@@ -92,10 +100,11 @@ export default class Game extends Component{
                 this.setState({green: false});
                 }, 1000 * timesx);
 
+
                 partialSequence.push(sequence[i])
 
             }else if( sequence[i] === 3){
-
+              
                 setTimeout(() => {
                 this.setState({red: true});
                 }, 1000 * timesx2)
@@ -104,10 +113,11 @@ export default class Game extends Component{
                 this.setState({red: false});
                 }, 1000 * timesx);
 
+
                 partialSequence.push(sequence[i])
 
             }else if( sequence[i] === 4){
-
+             
                 setTimeout(() => {
                 this.setState({blue: true});
                 }, 1000 * timesx2)
@@ -122,7 +132,7 @@ export default class Game extends Component{
             timesx++;
             timesx2++;
             this.setState({sequencePiece: partialSequence});
-            this.setState({switch: false});
+            
         }
 
         this.setState({round: round+=1});
@@ -130,6 +140,7 @@ export default class Game extends Component{
       }
 
       newGame(){
+
           this.setState({
             sequence: [],
             sequencePiece: [],
@@ -144,7 +155,8 @@ export default class Game extends Component{
             roundS: [],
             switch: false,
             youlose: ':)',
-            startSwitch: false
+            startSwitch: false,
+            roundTracker: 0
           })
       }
 
@@ -152,11 +164,38 @@ export default class Game extends Component{
           this.setState({startSwitch: true})
       }
 
+      playerPress(val){
+
+        if(val === 1){
+            this.setState({yellow: true})
+        }else if(val === 2){
+            this.setState({green: true})
+        }else if(val === 3){
+            this.setState({red: true})
+        }else if(val === 4){
+            this.setState({blue: true})
+        };
+        setTimeout(()=>
+        {this.setState({red: false,
+        blue: false,
+        green: false,
+        yellow: false})}, 1000)
+
+      }
+
     render(){
         
         if(this.state.switch){
-            this.gameRun()
+
+            setTimeout(() => {
+            if(this.state.switch){  
+               return this.gameRun()
+            }
+            }, 1000);
+
         }
+
+       
 
         return(
             <div className="gamebuttonbody">
@@ -168,25 +207,35 @@ export default class Game extends Component{
             
                     <div id="mbr1" className="middleButtonRow">
 
-                        {this.state.yellow ? <div>{<button id="yellow2" className="gamebutton" onClick={() => this.updatePlayerS(1)}/>}</div> : <button id="yellow" className="gamebutton" onClick={() => this.updatePlayerS(1)}/>  }
+                        {this.state.yellow ? <div>{<button id="yellow2" className="gamebutton" onClick={() => this.updatePlayerS(1)}><audio autoplay="true" src={sound2} type="audio/mp3" ></audio></button>}</div> : <button id="yellow" className="gamebutton" onClick={() => {this.updatePlayerS(1);this.playerPress(1)}}/>  }
 
-                        {this.state.green ? <div>{<button id="green2" className="gamebutton" onClick={() => this.updatePlayerS(2)}/>}</div> : <button id="green" className="gamebutton" onClick={() => this.updatePlayerS(2)}/>  }
+                        {this.state.green ? <div>{<button id="green2" className="gamebutton" onClick={() => this.updatePlayerS(2)}>{<audio autoplay="true" src={sound1} type="audio/mp3" ></audio>}</button>}</div> : <button id="green" className="gamebutton" onClick={() => {this.updatePlayerS(2);this.playerPress(2)}}/>  }
 
                     </div>
 
                     <div className="bottombuttons">
+                        <div className="testbutton">
+                        <h1 className="simon">SIMON</h1>
 
-                        {this.state.startSwitch ? <div>{<button className="buttonbutton" onClick={() => this.newGame()}><h1>newGame</h1></button>
-                        }</div> :  <button className="buttonbutton" onClick={() => {this.gameRun();this.newgameSwitch()}}><h1>Start</h1></button>}
+                        <div className="testbuttonrow">
 
+                        <div className="rounds"><h3>{this.state.roundTracker}</h3></div>
+
+                        <div className="placeholder"></div>
+
+                        {this.state.startSwitch ? <div>{<button className="buttonbutton" onClick={() => this.newGame()}></button>
+                        }</div> :  <button className="buttonbutton" onClick={() => {this.gameRun();this.newgameSwitch()}}></button>}
+                        </div>
+
+                        </div>
                     </div>
 
 
                     <div id="mbr2" className="middleButtonRow">
 
-                        {this.state.red ? <div>{<button id="red2" className="gamebutton" onClick={() => this.updatePlayerS(3)}/>}</div> : <button id="red" className="gamebutton" onClick={() => this.updatePlayerS(3)}/>  }
+                        {this.state.red ? <div>{<button id="red2" className="gamebutton" onClick={() => this.updatePlayerS(3)}><audio autoplay="true" src={sound3} type="audio/mp3" ></audio></button>}</div> : <button id="red" className="gamebutton" onClick={() => {this.updatePlayerS(3);this.playerPress(3)}}/>  }
 
-                        {this.state.blue ? <div>{<button id="blue2" className="gamebutton" onClick={() => this.updatePlayerS(4)}/>}</div> : <button id="blue" className="gamebutton" onClick={() => this.updatePlayerS(4)}/>  }
+                        {this.state.blue ? <div>{<button id="blue2" className="gamebutton" onClick={() => this.updatePlayerS(4)}><audio autoplay="true" src={sound4} type="audio/mp3" ></audio></button>}</div> : <button id="blue" className="gamebutton" onClick={() => {this.updatePlayerS(4);this.playerPress(4)}}/>  }
 
                     </div>
                     
