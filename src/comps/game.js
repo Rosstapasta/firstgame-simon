@@ -4,6 +4,7 @@ import sound1 from './sound1.mp3';
 import sound2 from './sound2.mp3';
 import sound3 from './sound3.mp3';
 import sound4 from './sound4.mp3';
+import sound5 from './sound5.mp3';
 
 
 export default class Game extends Component{
@@ -27,7 +28,8 @@ export default class Game extends Component{
           switch: false,
           youlose: ':)',
           startSwitch: false,
-          roundTracker: 0
+          roundTracker: 0,
+          looseSwitch: false,
         }
 
         this.updatePlayerS = this.updatePlayerS.bind(this);
@@ -55,10 +57,19 @@ export default class Game extends Component{
 
         if(playerSequence.length === sequencePiece.length && playerSequence.toString() === sequencePiece.toString()){
 
-               return this.setState({switch: true, playerSequence: [], roundTracker: roundTrack+=1})
+
+            setTimeout(() => {
+                return this.setState({switch: true, playerSequence: [], roundTracker: roundTrack+=1})
+                }, 1000)
+
 
         }else if(playerSequence.length === sequencePiece.length && playerSequence.toString() !== sequencePiece.toString()){
-                this.setState({youlose: "LOSER!", score: playerSequence.length-=1})
+                this.setState({youlose: "LOSER!", score: playerSequence.length-=1, looseSwitch: true});
+
+                setTimeout(() => {
+                    this.setState({looseSwitch: false})
+                }, 1000)
+
         }
 
         console.log(this.state.switch, "switch")
@@ -179,7 +190,7 @@ export default class Game extends Component{
         {this.setState({red: false,
         blue: false,
         green: false,
-        yellow: false})}, 1000)
+        yellow: false})}, 500)
 
       }
 
@@ -191,7 +202,7 @@ export default class Game extends Component{
             if(this.state.switch){  
                return this.gameRun()
             }
-            }, 1000);
+            }, 600);
 
         }
 
@@ -199,7 +210,7 @@ export default class Game extends Component{
 
         return(
             <div className="gamebuttonbody">
-            
+                {!this.state.looseSwitch ? <audio  autoplay="true" src={sound5} type="audio/mp3" ></audio> : <placeholder/>}
                 <h1>THOU SHALT DO AS SIMON SAYS</h1>
                 <div>{this.state.youlose}</div>
                 <div><h1>score {this.state.score}</h1></div>
