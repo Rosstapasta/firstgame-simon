@@ -55,7 +55,7 @@ box-shadow: 2px 2px rgb(1, 80, 1);
     height: 240px;
     width: 245px;
     border-radius: 125px;
-    background-color: rgb(34, 33, 33);
+    background-color: rgb(34, 33, 33);    
 }
 
 .testbuttonrow{
@@ -89,27 +89,36 @@ box-shadow: 2px 2px rgb(1, 80, 1);
 
 .gamebutton{
     height: 230px;
-    width: 250px;
+    width: 235px;
     border-radius: 20px;
     margin:10px;
     border: none;
+    position: relative
 }
 
 #yellow{
     background-color: rgb(255, 251, 0);
     border-radius: 500px 40px 40px 40px;
+    box-shadow: 7px 5px rgb(212, 212, 13);
     outline: 0;
+    bottom: 5px;
+    right: 7px;
+    
 }
 
 #yellow2{
     background-color: rgb(255, 255, 185);
     border-radius: 500px 40px 40px 40px;
+   
 }
 
 #green{
     background-color: green;
     border-radius: 40px 500px 40px 40px;
+    box-shadow: -7px 5px rgb(1, 80, 1);
     outline: 0;
+    bottom: 5px;
+    left: 7px;
 }
 
 #green2{
@@ -120,7 +129,10 @@ box-shadow: 2px 2px rgb(1, 80, 1);
 #red{
     background-color: red;
     border-radius: 40px 40px 40px 500px;
+    box-shadow: 7px -5px rgb(158, 14, 14);
     outline: 0;
+    top: 5px;
+    right: 7px;
 }
 
 #red2{
@@ -131,12 +143,14 @@ box-shadow: 2px 2px rgb(1, 80, 1);
 #blue{
     background-color: blue;
     border-radius: 40px 40px 500px 40px;
+    box-shadow:  -7px -5px  rgb(13, 13, 163);
     outline: 0;
+    top: 5px;
+    left: 7px;
 }
 
 #blue2{
     background-color: rgb(0, 183, 255);
-    
     border-radius: 40px 40px 500px 40px;
 }
 
@@ -147,5 +161,4 @@ box-shadow: 2px 2px rgb(1, 80, 1);
     border-radius: 600px;
     position: relative;
     bottom: 800px;
-
 }
